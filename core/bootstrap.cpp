@@ -3,31 +3,31 @@
 
 #include "state.cpp"
 #include "../models/motor.cpp"
+#include "../models/ultra.cpp"
 #include "../models/tracers/tracerLeft.cpp"
 #include "../models/tracers/tracerRight.cpp"
+#include "../models/irSensors/irSensorLeft.cpp"
+#include "../models/irSensors/irSensorRight.cpp"
 
 class Bootstrap
 {
 public:
     static void init()
     {
-        State *state = State::getInstance();
-
-        Motor *motor = Motor::getInstance();
-        TracerLeft *tracerLeft = TracerLeft::getInstance();
-        TracerRight *tracerRight = TracerRight::getInstance();
-
         wiringPiSetup();
         motor->init();
+        ultraSonic->init();
         tracerLeft->init();
         tracerRight->init();
+        irSensorLeft->init();
+        irSensorRight->init();
 
-        std::thread tracerLeftThread = TracerLeft::getInstance()->initThread(state);
-        std::thread tracerRightThread = TracerRight::getInstance()->initThread(state);
+        piThreadCreate (listenUltra);
+        piThreadCreate (listenTracerLeft);
+        piThreadCreate (listenTracerRight);
+        piThreadCreate (listenIRSensorLeft);
+        piThreadCreate (listenIRSensorRight);
         
         state->init();
-
-        tracerLeftThread.join();
-        tracerRightThread.join();
     }
 };

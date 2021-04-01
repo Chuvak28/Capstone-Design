@@ -11,22 +11,7 @@
 
 class Motor
 {
-private:
-    static Motor *instance;
-
-    Motor() {}
-
 public:
-    Motor(Motor &other) = delete;
-    void operator=(const Motor &) = delete;
-
-    static Motor *getInstance()
-    {
-        if (instance == nullptr)
-            instance = new Motor();
-        return instance;
-    }
-
     void init()
     {
         const int pins[4] = {IN1_PIN, IN2_PIN, IN3_PIN, IN4_PIN};
@@ -59,35 +44,30 @@ public:
     void forward(float intensity = 1)
     {
         _pwmWrite(intensity, 0, intensity, 0);
-        printf("Forward\n");
     }
 
     void right(float intensity = 1)
     {
         _pwmWrite(intensity, 0, 0, intensity);
-        printf("Right\n");
     }
 
     void left(float intensity = 1)
     {
         _pwmWrite(0, intensity, intensity, 0);
-        printf("Left\n");
     }
 
     void back(float intensity = 1)
     {
         _pwmWrite(0, intensity, 0, intensity);
-        printf("Backward\n");
     }
 
     void stop()
     {
         _pwmWrite(0, 0, 0, 0);
         reset();
-        printf("Stop\n");
     }
 };
 
-Motor *Motor::instance = nullptr;
+Motor *motor = new Motor();
 
 #endif
