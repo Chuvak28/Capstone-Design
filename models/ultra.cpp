@@ -1,4 +1,3 @@
-#include <thread>
 #include <wiringPi.h>
 #include "../core/state.cpp"
 #include "../helpers/constants.h"

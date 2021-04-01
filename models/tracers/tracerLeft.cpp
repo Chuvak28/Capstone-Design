@@ -1,4 +1,3 @@
-#include <thread>
 #include "tracer.cpp"
 #include "../../core/state.cpp"
 

@@ -1,4 +1,3 @@
-#include <thread>
 #include "irSensor.cpp"
 #include "../../core/state.cpp"
 
